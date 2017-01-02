@@ -46,14 +46,9 @@
   }  
   
   function assertObjectsEqual(actual, expected, testName) {
-    var fail = errorMessage(
-        JSON.stringify(actual), 
-        JSON.stringify(expected), 
-        testName
-    );
+    var fail = errorMessage(JSON.stringify(actual), JSON.stringify(expected), testName);
     var pass = passMessage(testName);
-    var areEqual;
-    var error;
+    var areEqual, error;
 
     try {
       areEqual = deepEqual(actual, expected);
