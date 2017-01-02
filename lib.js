@@ -30,7 +30,6 @@
     console.log(areEqual ? pass : fail);
   }
 
-
   function areObjects(obj1, obj2) {
     return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
   }
@@ -40,9 +39,7 @@
     var objTwoKeys = Object.keys(obj2);
 
     return areObjects(obj1, obj2) ?
-
       (objOneKeys.length === objTwoKeys.length) &&
-
       objOneKeys.reduce(function(isEqual, key) {
         return isEqual && deepEqual(obj1[key], obj2[key]);
       }, true) : (obj1 === obj2);
