@@ -12,6 +12,14 @@
     return "Passed [" + testName + "]";
   }
 
+  function areArrays(arr1, arr2) {
+    return Array.isArray(arr1) && Array.isArray(arr2);
+  }
+
+  function areObjects(obj1, obj2) {
+    return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
+  }
+
   function assertEqual(actual, expected, testName) {
     var fail = errorMessage(actual, expected, testName);
     var pass = passMessage(testName);
@@ -22,7 +30,8 @@
     var fail = errorMessage(actual, expected, testName);
     var pass = passMessage(testName);
 
-    var areEqual = actual.length === expected.length ? 
+    var areEqual = areArrays(actual, expected) && 
+      actual.length === expected.length ? 
       actual.every(function(item, i) {
         return item === expected[i];
       }) : false;
@@ -30,9 +39,6 @@
     console.log(areEqual ? pass : fail);
   }
 
-  function areObjects(obj1, obj2) {
-    return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
-  }
   
   function deepEqual(obj1, obj2) {
     var objOneKeys = Object.keys(obj1);
