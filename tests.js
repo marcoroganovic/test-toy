@@ -11,6 +11,8 @@ describe("Arrays", function() {
 describe("Assertions", function() {
   assertEqual(1, 1, "it should pass since arguments are equal");
   assertEqual(1, 2, "it should fail since arguments are not equal");
+  isTrue("hello", "it should pass because 'hello' is truthy value");
+  isFalse("", "it should pass because empty string is falsy value");
 });
 
 describe("Range", function() {
