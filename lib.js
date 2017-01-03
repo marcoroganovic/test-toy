@@ -1,11 +1,11 @@
 (function(global) {
   
   function errorMessage(actual, expected, testName) {
-    return "FAIL [" + testName + "] Expected [" + expected + "], instead got [" + actual + "]";
+    return "Fail [" + testName + "] Expected [" + expected + "], instead got [" + actual + "]";
   }
 
   function rangeErrorMessage(start, end, actual, testName) {
-    return "FAIL [" + testName + "] [" + actual + "] is not within range [" + start + "] to [" + end + "]";
+    return "Fail [" + testName + "] [" + actual + "] is not within range [" + start + "] to [" + end + "]";
   }
 
   function passMessage(testName) {
@@ -22,6 +22,18 @@
 
   function areObjects(obj1, obj2) {
     return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
+  }
+
+  function isTrue(actual, testMessage) {
+    var pass = passMessage(testMessage);
+    var fail = "Fail [" + testMessage + "]";
+    console.log(!!actual === true ? pass : fail);
+  }
+
+  function isFalse(actual, testMessage) {
+    var pass = passMessage(testMessage);
+    var fail = "Fail [" + testMessage + "]";
+    console.log(!!actual === false ? pass : fail);
   }
 
   function assertEqual(actual, expected, testName) {
@@ -84,6 +96,8 @@
 
   global.describe = describe;
   global.assertEqual = assertEqual;
+  global.isTrue = isTrue;
+  global.isFalse = isFalse;
   global.assertArraysEqual = assertArraysEqual;
   global.assertWithinRange = assertWithinRange;
   global.assertObjectsEqual = assertObjectsEqual;
