@@ -15,6 +15,10 @@
   function areArrays(arr1, arr2) {
     return Array.isArray(arr1) && Array.isArray(arr2);
   }
+  
+  function areArraysSameLength(arr1, arr2) {
+    return arr1.length === arr2.length;
+  }
 
   function areObjects(obj1, obj2) {
     return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
@@ -31,7 +35,7 @@
     var pass = passMessage(testName);
 
     var areEqual = areArrays(actual, expected) && 
-      actual.length === expected.length ? 
+      areArraysSameLength(actual, expected) ? 
       actual.every(function(item, i) {
         return item === expected[i];
       }) : false;
@@ -45,7 +49,7 @@
     var objTwoKeys = Object.keys(obj2);
 
     return areObjects(obj1, obj2) ?
-      (objOneKeys.length === objTwoKeys.length) &&
+      areArraysSameLength(objOneKeys, objTwoKeys) &&
       objOneKeys.reduce(function(isEqual, key) {
         return isEqual && deepEqual(obj1[key], obj2[key]);
       }, true) : (obj1 === obj2);
