@@ -6,6 +6,8 @@ body {
   color: #333;
 }
 
+
+
 ul {
   list-style: none;
 }
@@ -15,6 +17,11 @@ li {
   margin: 5px;
   border-radius: 5px;
   color: white;
+}
+
+.title {
+  text-align: center;
+  font-weight: 100;
 }
 
 #container {
