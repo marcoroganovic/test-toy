@@ -1,5 +1,7 @@
 (function(global) {
-  
+
+  var testStack = [];
+
   function errorMessage(actual, expected, testName) {
     return "Fail [" + testName + "] Expected [" + expected + "], instead got [" + actual + "]";
   }
@@ -24,16 +26,31 @@
     return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
   }
 
-  function isTrue(actual, testMessage) {
-    var pass = passMessage(testMessage);
-    var fail = "Fail [" + testMessage + "]";
-    console.log(!!actual === true ? pass : fail);
+  function addTest(testVal, testMessage) {
+    testStack.push({
+      className: testVal ? "true" : "false",
+      testName: testMessage
+    });
   }
 
-  function isFalse(actual, testMessage) {
-    var pass = passMessage(testMessage);
-    var fail = "Fail [" + testMessage + "]";
-    console.log(!!actual === false ? pass : fail);
+  function isTrue(actual, testName) {
+    var pass = passMessage(testName);
+    var fail = "Fail [" + testName + "]";
+    var result = !!actual === true;
+    
+    addTest(result, testName);
+
+    console.log(result ? pass : fail);
+  }
+
+  function isFalse(actual, testName) {
+    var pass = passMessage(testName);
+    var fail = "Fail [" + testName + "]";
+    var result = !!actual === false;
+    
+    addTest(result, testName);
+
+    console.log(result ? pass : fail);
   }
 
   function it(testName, cb) {
@@ -44,7 +61,11 @@
   function assertEqual(actual, expected, testName) {
     var fail = errorMessage(actual, expected, testName);
     var pass = passMessage(testName);
-    console.log(actual === expected ? pass : fail);
+    var result = actual === expected;
+
+    addTest(result, testName);
+
+    console.log(result ? pass : fail);
   }
 
   function assertArraysEqual(actual, expected, testName) {
@@ -56,6 +77,8 @@
       actual.every(function(item, i) {
         return item === expected[i];
       }) : false;
+    
+    addTest(areEqual, testName);
 
     console.log(areEqual ? pass : fail);
   }
@@ -82,6 +105,8 @@
     } catch (e) {
       error = e;
     }
+     
+    addTest(areEqual, testName);
 
     console.log(areEqual ? pass : fail);
     if(error) console.log("\t" + error);
@@ -90,7 +115,9 @@
   function assertWithinRange(start, end, actual, testName) {
     var fail = rangeErrorMessage(start, end, actual, testName);
     var pass = passMessage(testName);
-    console.log(actual >= start && actual <= end ? pass : fail);
+    var result = actual >= start && actual <= end;
+    addTest(result, testName);
+    console.log(result ? pass : fail);
   }
 
   function describe(testSuite, cb) {
@@ -99,7 +126,19 @@
     console.log("----------<");
   }
 
+  function run(selector) {
+    var result = "";
+    
+    testStack.forEach(item => {
+      result += "<li class=\"" + item.className + "\">" + item.testName + "</li>";
+    });
+
+    var el = document.querySelector(selector);
+    el.innerHTML = result;
+  }
+
   global.Assert = {
+    run: run,
     describe: describe,
     equal: assertEqual,
     isTrue: isTrue,

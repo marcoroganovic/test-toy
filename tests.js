@@ -1,6 +1,7 @@
 Assert.describe("Objects", function() {
   Assert.objectsEqual({a: 1}, {a: 1}, "it should pass since two objects are equal");
   Assert.objectsEqual({a: 1}, {b: [1, 2]}, "it should fail since two objects are not equal");
+  Assert.isFalse("hello", "it should fail because string 'hello' is not falsy");
 });
 
 Assert.describe("Arrays", function() {
@@ -19,3 +20,5 @@ Assert.describe("Range", function() {
   Assert.withinRange(10, 20, 15, "it should pass since 15 is between 10 and 20");
   Assert.withinRange(10, 20, 21, "it should fail since 21 is not between 10 and 20");
 });
+
+Assert.run("#container");
