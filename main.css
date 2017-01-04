@@ -36,6 +36,7 @@ li.false {
 
 li.false::before {
   content: "x ";
+  font-weight: bolder;
 }
 
 li.true {
