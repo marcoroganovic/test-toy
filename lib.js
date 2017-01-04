@@ -33,18 +33,24 @@
     });
   }
   
+  function getMessages(testName, actual, expected) {
+    return {
+      pass: passMessage(testName),
+      fail: errorMessage(actual, expected, testName)
+    }
+  }
+
   function logToConsole(result, pass, fail) {
     var message = result ? "Passed: " + pass : "Failed: " + fail;
     console[result ? "info" : "error"](message);
   }
 
   function is(val, actual, testName) {
-    var pass = passMessage(testName);
-    var fail = testName;
+    var messages = getMessages(testName, actual, val);
     var result = !!actual === val;
     
-    addTest(result, pass, fail);
-    logToConsole(result, pass, fail);
+    addTest(result, messages.pass, messages.fail);
+    logToConsole(result, messages.pass, messages.fail);
   }
 
   function isTrue(actual, testName) {
@@ -61,18 +67,15 @@
   }
  
   function assertEqual(actual, expected, testName) {
-    var fail = errorMessage(actual, expected, testName);
-    var pass = passMessage(testName);
+    var messages = getMessages(testName, actual, expected);
     var result = actual === expected;
 
-    addTest(result, pass, fail);
-
-    logToConsole(result, pass, fail);
+    addTest(result, messages.pass, messages.fail);
+    logToConsole(result, messages.pass, messages.fail);
   }
 
   function assertArraysEqual(actual, expected, testName) {
-    var fail = errorMessage(actual, expected, testName);
-    var pass = passMessage(testName);
+    var messages = getMessages(testName, actual, expected);
 
     var areEqual = areArrays(actual, expected) && 
       areArraysSameLength(actual, expected) ? 
@@ -80,8 +83,8 @@
         return item === expected[i];
       }) : false;
     
-    addTest(areEqual, pass, fail);
-    logToConsole(areEqual, pass, fail);
+    addTest(areEqual, messages.pass, messages.fail);
+    logToConsole(areEqual, messages.pass, messages.fail);
   }
 
   
@@ -97,8 +100,7 @@
   }  
   
   function assertObjectsEqual(actual, expected, testName) {
-    var fail = errorMessage(JSON.stringify(actual), JSON.stringify(expected), testName);
-    var pass = passMessage(testName);
+    var messages = getMessages(testName, JSON.stringify(actual), JSON.stringify(expected));
     var areEqual, error;
 
     try {
@@ -107,8 +109,8 @@
       error = e;
     }
      
-    addTest(areEqual, pass, fail);
-    logToConsole(areEqual, pass, fail);
+    addTest(areEqual, messages.pass, messages.fail);
+    logToConsole(areEqual, messages.pass, messages.fail);
     if(error) console.log("\t" + error);
   }
 
