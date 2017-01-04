@@ -36,6 +36,11 @@
     console.log(!!actual === false ? pass : fail);
   }
 
+  function it(testName, cb) {
+    console.log(testName);
+    cb();
+  }
+ 
   function assertEqual(actual, expected, testName) {
     var fail = errorMessage(actual, expected, testName);
     var pass = passMessage(testName);
@@ -94,12 +99,14 @@
     console.log("----------<");
   }
 
-  global.describe = describe;
-  global.assertEqual = assertEqual;
-  global.isTrue = isTrue;
-  global.isFalse = isFalse;
-  global.assertArraysEqual = assertArraysEqual;
-  global.assertWithinRange = assertWithinRange;
-  global.assertObjectsEqual = assertObjectsEqual;
+  global.Assert = {
+    describe: describe,
+    equal: assertEqual,
+    isTrue: isTrue,
+    isFalse: isFalse,
+    arraysEqual: assertArraysEqual,
+    withinRange: assertWithinRange,
+    objectsEqual: assertObjectsEqual
+  }
 
 })(window);
