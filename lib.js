@@ -3,15 +3,15 @@
   var testStack = [];
 
   function errorMessage(actual, expected, testName) {
-    return "Failed [ " + testName + " ] Expected [ " + expected + " ], instead got [ " + actual + " ]";
+    return `Failed [ ${testName} ] Expected [ ${expected} ], instead got [ ${actual} ]`;
   }
 
   function rangeErrorMessage(start, end, actual, testName) {
-    return "Failed [ " + testName + " ] [ " + actual + " ] is not within range [ " + start + " ] to [ " + end + " ]";
+    return `Failed [ ${testName} ] [ ${actual} ] is not within range [ ${start} ] to [ ${end} ]`;
   }
 
   function passMessage(testName) {
-    return "Passed [ " + testName + " ]";
+    return `Passed [ ${testName} $`;
   }
 
   function areArrays(arr1, arr2) {
