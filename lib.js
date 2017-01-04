@@ -3,15 +3,15 @@
   var testStack = [];
 
   function errorMessage(actual, expected, testName) {
-    return `Failed [ ${testName} ] Expected [ ${expected} ], instead got [ ${actual} ]`;
+    return `${testName} ] Expected [ ${expected} ], instead got [ ${actual} ]`;
   }
 
   function rangeErrorMessage(start, end, actual, testName) {
-    return `Failed [ ${testName} ] [ ${actual} ] is not within range [ ${start} ] to [ ${end} ]`;
+    return `${testName} [ ${actual} ] is not within range [ ${start} ] to [ ${end} ]`;
   }
 
   function passMessage(testName) {
-    return `Passed [ ${testName} ]`;
+    return `${testName}`;
   }
 
   function areArrays(arr1, arr2) {
@@ -32,13 +32,19 @@
       testName: testVal ? passMessage : failMessage
     });
   }
+  
+  function logToConsole(result, pass, fail) {
+    var message = result ? "Passed: " + pass : "Failed: " + fail;
+    console[result ? "info" : "error"](message);
+  }
+
   function is(val, actual, testName) {
     var pass = passMessage(testName);
-    var fail = "Failed [ " + testName + " ]";
+    var fail = testName;
     var result = !!actual === val;
     
     addTest(result, pass, fail);
-    console.log(result ? pass : fail);
+    logToConsole(result, pass, fail);
   }
 
   function isTrue(actual, testName) {
@@ -61,7 +67,7 @@
 
     addTest(result, pass, fail);
 
-    console.log(result ? pass : fail);
+    logToConsole(result, pass, fail);
   }
 
   function assertArraysEqual(actual, expected, testName) {
@@ -75,8 +81,7 @@
       }) : false;
     
     addTest(areEqual, pass, fail);
-
-    console.log(areEqual ? pass : fail);
+    logToConsole(areEqual, pass, fail);
   }
 
   
@@ -103,8 +108,7 @@
     }
      
     addTest(areEqual, pass, fail);
-
-    console.log(areEqual ? pass : fail);
+    logToConsole(areEqual, pass, fail);
     if(error) console.log("\t" + error);
   }
 
@@ -113,7 +117,7 @@
     var pass = passMessage(testName);
     var result = actual >= start && actual <= end;
     addTest(result, pass, fail);
-    console.log(result ? pass : fail);
+    logToConsole(result, pass, fail);
   }
 
   function describe(testSuite, cb) {
