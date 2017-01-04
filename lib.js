@@ -3,15 +3,15 @@
   var testStack = [];
 
   function errorMessage(actual, expected, testName) {
-    return "Fail [" + testName + "] Expected [" + expected + "], instead got [" + actual + "]";
+    return "Failed [ " + testName + " ] Expected [ " + expected + " ], instead got [ " + actual + " ]";
   }
 
   function rangeErrorMessage(start, end, actual, testName) {
-    return "Fail [" + testName + "] [" + actual + "] is not within range [" + start + "] to [" + end + "]";
+    return "Failed [ " + testName + " ] [ " + actual + " ] is not within range [ " + start + " ] to [ " + end + " ]";
   }
 
   function passMessage(testName) {
-    return "Passed [" + testName + "]";
+    return "Passed [ " + testName + " ]";
   }
 
   function areArrays(arr1, arr2) {
@@ -26,31 +26,27 @@
     return (obj1 && obj2) && (typeof obj1 === "object" && typeof obj2 === "object");
   }
 
-  function addTest(testVal, testMessage) {
+  function addTest(testVal, passMessage, failMessage) {
     testStack.push({
       className: testVal ? "true" : "false",
-      testName: testMessage
+      testName: testVal ? passMessage : failMessage
     });
+  }
+  function is(val, actual, testName) {
+    var pass = passMessage(testName);
+    var fail = "Failed [ " + testName + " ]";
+    var result = !!actual === val;
+    
+    addTest(result, pass, fail);
+    console.log(result ? pass : fail);
   }
 
   function isTrue(actual, testName) {
-    var pass = passMessage(testName);
-    var fail = "Fail [" + testName + "]";
-    var result = !!actual === true;
-    
-    addTest(result, testName);
-
-    console.log(result ? pass : fail);
+    is(true, actual, testName);
   }
 
   function isFalse(actual, testName) {
-    var pass = passMessage(testName);
-    var fail = "Fail [" + testName + "]";
-    var result = !!actual === false;
-    
-    addTest(result, testName);
-
-    console.log(result ? pass : fail);
+    is(false, actual, testName);
   }
 
   function it(testName, cb) {
@@ -63,7 +59,7 @@
     var pass = passMessage(testName);
     var result = actual === expected;
 
-    addTest(result, testName);
+    addTest(result, pass, fail);
 
     console.log(result ? pass : fail);
   }
@@ -78,7 +74,7 @@
         return item === expected[i];
       }) : false;
     
-    addTest(areEqual, testName);
+    addTest(areEqual, pass, fail);
 
     console.log(areEqual ? pass : fail);
   }
@@ -106,7 +102,7 @@
       error = e;
     }
      
-    addTest(areEqual, testName);
+    addTest(areEqual, pass, fail);
 
     console.log(areEqual ? pass : fail);
     if(error) console.log("\t" + error);
@@ -116,7 +112,7 @@
     var fail = rangeErrorMessage(start, end, actual, testName);
     var pass = passMessage(testName);
     var result = actual >= start && actual <= end;
-    addTest(result, testName);
+    addTest(result, pass, fail);
     console.log(result ? pass : fail);
   }
 
