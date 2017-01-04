@@ -1,7 +1,6 @@
 Assert.describe("Objects", function() {
   Assert.objectsEqual({a: 1}, {a: 1}, "it should pass since two objects are equal");
   Assert.objectsEqual({a: 1}, {b: [1, 2]}, "it should fail since two objects are not equal");
-  Assert.isFalse("hello", "it should fail because string 'hello' is not falsy");
 });
 
 Assert.describe("Arrays", function() {
