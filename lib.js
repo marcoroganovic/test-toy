@@ -124,13 +124,17 @@
 
   function run(selector) {
     var result = "";
-    
+    var el = document.querySelector(selector);
+
     testStack.forEach(item => {
       result += "<li class=\"" + item.className + "\">" + item.testName + "</li>";
     });
-
-    var el = document.querySelector(selector);
-    el.innerHTML = result;
+    
+    if(el) {
+      el.innerHTML = result;
+    } else {
+      document.body.innerHTML = "There is no DOM with provided selector";
+    }
   }
 
   global.Assert = {
