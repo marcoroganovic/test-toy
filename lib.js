@@ -11,7 +11,7 @@
   }
 
   function passMessage(testName) {
-    return `Passed [ ${testName} $`;
+    return `Passed [ ${testName} ]`;
   }
 
   function areArrays(arr1, arr2) {
