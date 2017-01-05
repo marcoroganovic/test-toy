@@ -123,9 +123,17 @@
   }
 
   function assertNodesEqual(actual, expected, testName) {
-    var messages = getMessages(testName, actual, expected);
+    var messages = getMessages(testName, actual.outerHTML, expected.outerHTML);
     var result = actual.isEqualNode(expected);
 
+    addTest(result, messages.pass, messages.fail);
+    logToConsole(result, messages.pass, messages.fail);
+  }
+
+  function assertNodesNotEqual(actual, expected, testName) {
+    var messages = getMessages(testName, actual.outerHTML, expected.outerHTML);
+    var result = actual.isEqualNode(expected) === false;
+    
     addTest(result, messages.pass, messages.fail);
     logToConsole(result, messages.pass, messages.fail);
   }
@@ -160,7 +168,8 @@
     arraysEqual: assertArraysEqual,
     withinRange: assertWithinRange,
     objectsEqual: assertObjectsEqual,
-    nodesEqual: assertNodesEqual
+    nodesEqual: assertNodesEqual,
+    nodesNotEqual: assertNodesNotEqual
   }
 
 })(window);
