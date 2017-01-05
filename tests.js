@@ -20,4 +20,10 @@ Assert.describe("Range", function() {
   Assert.withinRange(10, 20, 21, "it should fail since 21 is not between 10 and 20");
 });
 
+Assert.describe("Nodes", function() {
+  var h1 = document.createElement("h1");
+  var h1Too = document.createElement("h1");
+  Assert.nodesEqual(h1, h1Too, "it should pass since both nodes are empty H1's");
+});
+
 Assert.run("#container");
